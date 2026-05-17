@@ -3,11 +3,10 @@ struct Aviao {
     int numVoo; 
     int combustivel; 
     int emergencia;
-    int cargaPerigosa;  
+    int cargaPerigosa; 
 };
 
 typedef struct tipoFila Fila; 
-
 
 Fila* criaPista (); 
 
@@ -23,8 +22,10 @@ int atualizarPrioridade (Fila* pista, int numVoo);
 
 int pistaLiberada (Fila* pista);
 
-int aviaoSemCombustivel (Fila* pista, struct Aviao aviao);
+int aviaoSemCombustivel (Fila* pista);
 
 void exibePista (Fila* pista, int quant); 
 
 void apagaFila (Fila* pista); 
+
+int PistaParaDecolagem(Fila* pista, Fila* pistaDecolagem); 

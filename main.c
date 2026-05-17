@@ -1,10 +1,16 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "Aeroporto.h"
+#include <windows.h>
 
 int main(){
 
-     Fila *fila = criaFila();
+    /* Conferir nomes de variaveis, arrumar passagem nos cases e colocar scanf*/
+
+    Fila *fila = criaFila();
+    /*Lauane: chamei o mesmo cria pista para minha pista de decolagem, mas nao sei se da erro kkkk */
+    Fila *pistaDecolagem = criaPista();
+
 
     if(fila == NULL)
     {
@@ -15,10 +21,10 @@ int main(){
     int opcao;
     struct Aviao aviao;
 
-
+    /*Lauane:precisa add mais funcoes, olhar nos prototipos please */
     do{
         printf("\n\n=======================================\n");
-        printf("Torre de Controle - Aeroporto IFSP\n");
+        printf("  Torre de Controle - Aeroporto IFSP\n");
         printf("=======================================\n\n");
         printf("| [1]- Inserir Avião  |\n");
         printf("| [2]- Remover Avião  |\n");
@@ -41,11 +47,15 @@ int main(){
             printf("\nInforme o nível do combustível do avião em porcentagem(0%% - 100%%): ");
 
 
-            printf("\nInforme : ");//EMERGENCIA
-            printf("\nInforme : ");//CARGA PERIGOSA
+            printf("\nHá alguma emergência nesse voo? Selecione a opção mais correspondente: \n");
+            printf("\n[01 - Emergência médica]\n"); 
+            printf("\n[02 - Emergência militar]\n"); 
+            printf("\n[03 - Emergência mecânica no avião]\n"); 
+            printf("\n[04 - Não há emergência nesse voo...]\n"); 
 
-
-
+            printf("\nHá carga perigosa nesse avião? \n");
+            printf("\n[01 - Sim]\n"); 
+            printf("\n[02 - Não]\n"); 
 
             if(insereFila(fila, aviao)){
                     printf("Avião inserido com sucesso!\n");
@@ -111,9 +121,6 @@ int main(){
             break;
         }
     }while(opcao != 0);
-    
-
-    apagarFila(pista);
 
     return 0;
 }
