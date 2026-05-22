@@ -1,127 +1,182 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "Aeroporto.h"
-#include <windows.h>
 
-int main(){
+int main() {
 
-    /* Conferir nomes de variaveis, arrumar passagem nos cases e colocar scanf*/
-
-    Fila *fila = criaFila();
-    /*Lauane: chamei o mesmo cria pista para minha pista de decolagem, mas nao sei se da erro kkkk */
+    Fila *fila = criaPista();
     Fila *pistaDecolagem = criaPista();
 
+    if(fila == NULL) {
 
-    if(fila == NULL)
-    {
         printf("Erro ao criar fila!\n");
         return 1;
     }
 
     int opcao;
+    int numeroBusca;
+
     struct Aviao aviao;
 
-    /*Lauane:precisa add mais funcoes, olhar nos prototipos please */
-    do{
-        printf("\n\n=======================================\n");
-        printf("  Torre de Controle - Aeroporto IFSP\n");
-        printf("=======================================\n\n");
-        printf("| [1]- Inserir Avião  |\n");
-        printf("| [2]- Remover Avião  |\n");
-        printf("| [3]- Consultar Fila |\n");
-        printf("| [4]- Buscar Avião   |\n");
-        printf("| [5]- Prioridade     |\n");
-        printf("| [6]- Exibir Pista   |\n");
-        printf("| [7]- Apagar Fila    |\n");
-        printf("| [0]- Sair           |\n");
+    do {
 
-        switch (opcao){
+        printf("\n=======================================\n");
+        printf(" Torre de Controle - Aeroporto IFSP\n");
+        printf("=======================================\n");
+
+        printf("[1] Inserir Aviao\n");
+        printf("[2] Remover Aviao\n");
+        printf("[3] Consultar Primeiro Aviao\n");
+        printf("[4] Buscar Aviao\n");
+        printf("[5] Atualizar Prioridade\n");
+        printf("[6] Exibir Pista\n");
+        printf("[7] Apagar Fila\n");
+        printf("[8] Liberar Decolagem\n");
+        printf("[0] Sair\n");
+
+        printf("\nEscolha: ");
+        scanf("%d", &opcao);
+
+        switch(opcao) {
+
             case 1:
 
-            printf("\nInforme o nome da companhia do voo: ");
-            scanf("");
+                printf("\nNome da companhia: ");
+                scanf("%s", aviao.nomeCompanhia);
 
-            printf("\nInforme o número do voo: ");
+                printf("Numero do voo: ");
+                scanf("%d", &aviao.numVoo);
 
+                printf("Combustivel (0-100): ");
+                scanf("%d", &aviao.combustivel);
 
-            printf("\nInforme o nível do combustível do avião em porcentagem(0%% - 100%%): ");
+                printf("\n[0] Sem Emergencia\n");
+                printf("[1] Emergencia Medica\n");
+                printf("[2] Emergencia Militar\n");
+                printf("[3] Emergencia Mecanica\n");
 
+                printf("Nivel de emergencia: ");
+                scanf("%d", &aviao.emergencia);
 
-            printf("\nHá alguma emergência nesse voo? Selecione a opção mais correspondente: \n");
-            printf("\n[01 - Emergência médica]\n"); 
-            printf("\n[02 - Emergência militar]\n"); 
-            printf("\n[03 - Emergência mecânica no avião]\n"); 
-            printf("\n[04 - Não há emergência nesse voo...]\n"); 
+                printf("\n[1] Sim\n");
+                printf("[2] Nao\n");
 
-            printf("\nHá carga perigosa nesse avião? \n");
-            printf("\n[01 - Sim]\n"); 
-            printf("\n[02 - Não]\n"); 
+                printf("Carga perigosa: ");
+                scanf("%d", &aviao.cargaPerigosa);
 
-            if(insereFila(fila, aviao)){
-                    printf("Avião inserido com sucesso!\n");
-                }else{
-                    printf("Erro ao inserir o avião!\n");
+                if(insereAviao(fila, aviao)) {
+
+                    printf("\nAviao inserido com sucesso!\n");
+
+                } else {
+
+                    printf("\nErro ao inserir aviao!\n");
                 }
+
             break;
 
             case 2:
-                if(removeAviao(pista)){
 
+                if(removeAviao(fila)) {
 
-                    printf("Avião removido com sucesso\n");
-                }else{
-                printf("Fila vazia\n");
+                    printf("\nAviao removido com sucesso!\n");
+
+                } else {
+
+                    printf("\nFila vazia!\n");
                 }
+
             break;
 
             case 3:
-                if(consultaPista){
-                    printf("Primeiro avião a fila é: ");
-                }else{
-                    printf("Fila vazia");
+
+                if(consultaPista(fila, &aviao)) {
+
+                    printf("\nPrimeiro aviao da fila:\n");
+                    printf("Companhia: %s\n", aviao.nomeCompanhia);
+                    printf("Voo: %d\n", aviao.numVoo);
+
+                } else {
+
+                    printf("\nFila vazia!\n");
                 }
+
             break;
 
             case 4:
-                int buscarAviao (Fila* pista, int numVoo, struct Aviao *aviao); 
+
+                printf("\nDigite o numero do voo: ");
+                scanf("%d", &numeroBusca);
+
+                if(buscarAviao(fila, numeroBusca, &aviao)) {
+
+                    printf("\nAviao encontrado!\n");
+                    printf("Companhia: %s\n", aviao.nomeCompanhia);
+
+                } else {
+
+                    printf("\nAviao nao encontrado!\n");
+                }
 
             break;
 
             case 5:
-                int atualizarPrioridade (Fila* pista, int numVoo);
+
+                printf("\nDigite o numero do voo: ");
+                scanf("%d", &numeroBusca);
+
+                if(atualizarPrioridade(fila, numeroBusca)) {
+
+                    printf("\nPrioridade atualizada!\n");
+
+                } else {
+
+                    printf("\nAviao nao encontrado!\n");
+                }
+
             break;
 
             case 6:
+
                 exibePista(fila, 1);
                 exibePista(fila, 2);
                 exibePista(fila, 3);
                 exibePista(fila, 4);
                 exibePista(fila, 5);
+
             break;
 
             case 7:
-                apagarFila(fila);
 
-                fila = criaFila();
+                apagaFila(fila);
 
-                if(fila != NULL){
-                    printf("Fila liberada com sucesso!\n");
-                }else{
-                    printf("Erro ao recriar fila!\n");
-                    return 1;
-                }
+                fila = criaPista();
+
+                printf("\nFila apagada com sucesso!\n");
+
+            break;
+
+            case 8:
+
+                PistaParaDecolagem(fila, pistaDecolagem);
+
             break;
 
             case 0:
-                printf("Encerrando programa....");
+
+                printf("\nEncerrando sistema...\n");
+
             break;
 
             default:
-                    printf("Opção inválida escolha outra opção");
-            break;
+
+                printf("\nOpcao invalida!\n");
         }
-    }while(opcao != 0);
+
+    } while(opcao != 0);
+
+    apagaFila(fila);
+    apagaFila(pistaDecolagem);
 
     return 0;
 }
-
